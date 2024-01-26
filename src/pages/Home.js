@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 export default function Home() {
   const [riders, setRiders] = useState([]);
@@ -16,7 +17,8 @@ export default function Home() {
   return (
     <div className="container">
       <div className="py-4">
-        <button className="btn btn-outline-success mb-4 ">Add Rider</button>
+        <Link className="btn btn-outline-success mb-4" to="/addrider">Add Rider</Link>
+        
         <table class="table border shadow">
           <thead>
             <tr>
