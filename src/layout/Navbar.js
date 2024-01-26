@@ -20,9 +20,9 @@ export default function Navbar() {
             <span className="navbar-toggler-icon"></span>
           </button>
             
-          <form className="d-flex" role="search">
+          <form className="d-flex con" role="search">
               <input
-                className="form-control me-2"
+                className="form-control me-1"
                 type="search"
                 placeholder="Search"
                 aria-label="Search"
@@ -30,7 +30,7 @@ export default function Navbar() {
               <button className="btn btn-secondary" type="submit">
                 Search
               </button>
-            </form>
+              </form>
         </div>
       </nav>
     </div>
