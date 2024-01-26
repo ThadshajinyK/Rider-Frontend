@@ -2,20 +2,21 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 
 export default function Home() {
-    const[riders,setRiders]=useState([])
+  const [riders, setRiders] = useState([]);
 
-    useEffect(()=>{
-        loadRiders();
-    },[]);
+  useEffect(() => {
+    loadRiders();
+  }, []);
 
-    const loadRiders=async()=>{
-        const results=await axios.get("http://localhost:8080/riders")
-    console.log(results.data)
-        setRiders(results.data)
-    }
+  const loadRiders = async () => {
+    const results = await axios.get("http://localhost:8080/riders");
+    console.log(results.data);
+    setRiders(results.data);
+  };
   return (
     <div className="container">
       <div className="py-4">
+        <button className="btn btn-outline-success mb-4 ">Add Rider</button>
         <table class="table border shadow">
           <thead>
             <tr>
@@ -27,45 +28,43 @@ export default function Home() {
               <th scope="col">Status</th>
               {/* <th scope="col">Image</th> */}
               <th scope="col">Actions</th>
-
             </tr>
           </thead>
           <tbody>
-            {
-              riders.map((rider,index)=>(
-<tr>
-              <th scope="row" key={index}>{index+1}</th>
-              <td>{rider.name}</td>
-              <td>{rider.email}</td>
-              <td>{rider.position}</td>
-              <td>{rider.nic}</td>
-              <td>{rider.status}</td>
-              {/* <td>
+            {riders.map((rider, index) => (
+              <tr>
+                <th scope="row" key={index}>
+                  {index + 1}
+                </th>
+                <td>{rider.name}</td>
+                <td>{rider.email}</td>
+                <td>{rider.position}</td>
+                <td>{rider.nic}</td>
+                <td>{rider.status ? (
+                 <span class="badge text-bg-success">Success</span>
+                ):(<span class="badge text-bg-danger">Not Active</span>)}</td>
+                {/* <td>
   {rider.status ? (
     <span className="badge badge-success">Active</span>
   ) : (
     <span className="badge badge-danger">Not Active</span>
   )}
 </td> */}
-              <td><img src={rider.image} alt="rider"/></td>
-              <td>
-                <button className="btn btn-primary mx-2">View</button>
-                <button className="btn btn-outline-secondary mx-2">Edit</button>
-                <button className="btn btn-danger mx-2">Delete</button>
-              
-              </td>
-              
-
-            </tr>
-              ))
-            }
-            
-          
+                {/* <td>
+                  <img src={rider.image} alt="rider" />
+                </td> */}
+                <td>
+                  <button className="btn btn-primary mx-2">View</button>
+                  <button className="btn btn-outline-secondary mx-2">
+                    Edit
+                  </button>
+                  <button className="btn btn-danger mx-2">Delete</button>
+                </td>
+              </tr>
+            ))}
           </tbody>
         </table>
       </div>
     </div>
   );
 }
-
-
