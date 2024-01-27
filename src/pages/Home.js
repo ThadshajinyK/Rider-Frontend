@@ -51,7 +51,7 @@ export default function Home() {
           </form>
         </div>
 
-        <table class="table border shadow">
+        <table className="table border shadow">
           <thead>
             <tr>
               <th scope="col">#</th>
@@ -85,27 +85,27 @@ export default function Home() {
                   <td>{rider.nic}</td>
                   <td>
                     {rider.status ? (
-                      <span class="badge text-bg-success">Active</span>
+                      <span className="badge text-bg-success">Active</span>
                     ) : (
-                      <span class="badge text-bg-danger">Not Active</span>
+                      <span className="badge text-bg-danger">Not Active</span>
                     )}
                   </td>
                  
                   <td>
                     <Link
-                      className="btn btn-primary mx-2"
+                      className="btn btn-primary mx-2 mb-1"
                       to={`/viewrider/${rider.id}`}
                     >
                       View
                     </Link>
                     <Link
-                      className="btn btn-outline-secondary mx-2"
+                      className="btn btn-outline-secondary mx-2 mb-1"
                       to={`/editrider/${rider.id}`}
                     >
                       Edit
                     </Link>
                     <button
-                      className="btn btn-danger mx-2"
+                      className="btn btn-danger mx-2 mb-1"
                       onClick={() => deleteRider(rider.id)}
                     >
                       Delete
@@ -119,27 +119,27 @@ export default function Home() {
 
       {/* pagination */}
       <nav aria-label="Page navigation example">
-        <ul class="pagination justify-content-end">
-          <li class="page-item disabled">
-            <a class="page-link">Previous</a>
+        <ul className="pagination justify-content-end">
+          <li className="page-item disabled">
+            <a className="page-link">Previous</a>
           </li>
-          <li class="page-item">
-            <a class="page-link" href="#">
+          <li className="page-item">
+            <a className="page-link" href="#">
               1
             </a>
           </li>
-          <li class="page-item">
-            <a class="page-link" href="#">
+          <li className="page-item">
+            <a className="page-link" href="#">
               2
             </a>
           </li>
-          <li class="page-item">
-            <a class="page-link" href="#">
+          <li className="page-item">
+            <a className="page-link" href="#">
               3
             </a>
           </li>
-          <li class="page-item">
-            <a class="page-link" href="#">
+          <li className="page-item">
+            <a className="page-link" href="#">
               Next
             </a>
           </li>

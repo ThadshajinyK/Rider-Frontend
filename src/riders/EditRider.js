@@ -16,31 +16,108 @@ export default function EdidRider() {
     image: null,
   });
 
+  const [showAlert, setShowAlert] = useState(false);
+  const [alertMessage, setAlertMessage] = useState("");
+  const [alertType, setAlertType] = useState("success");
+
   const { name, email, position, nic, status, image } = rider;
   const onInputChange = (e) => {
     setRider({ ...rider, [e.target.name]: e.target.value });
   };
 
+  const validateForm = () => {
+    // Validate name
+    if (!name.trim()) {
+      setAlertMessage("Name is required");
+      setAlertType("danger");
+      setShowAlert(true);
+      return false;
+    }
 
+    // Validate email
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!email.trim() || !emailRegex.test(email)) {
+      setAlertMessage("Valid email address is required");
+      setAlertType("danger");
+      setShowAlert(true);
+      return false;
+    }
+
+    // Validate position
+    if (!position.trim()) {
+      setAlertMessage("Position is required");
+      setAlertType("danger");
+      setShowAlert(true);
+      return false;
+    }
+
+    // Validate NIC
+    const nicRegex = /^[0-9]{9}[vVxX]$/;
+    if (!nic.trim() || !nicRegex.test(nic)) {
+      setAlertMessage("Valid NIC number is required");
+      setAlertType("danger");
+      setShowAlert(true);
+      return false;
+    }
+
+    // Validate status
+    if (!status) {
+      setAlertMessage("Status is required");
+      setAlertType("danger");
+      setShowAlert(true);
+      return false;
+    }
+
+    // Validate image
+    if (!image) {
+      setAlertMessage("Image is required");
+      setAlertType("danger");
+      setShowAlert(true);
+      return false;
+    }
+
+    return true;
+  };
 
   const onFileChange = (e) => {
     setRider({ ...rider, image: e.target.files[0] });
   };
 
   useEffect(() => {
-    loadRiders();
+    loadRider();
   }, []);
   
-  async function onSubmit(e) {
-        e.preventDefault();
+  const onSubmit = async (e) => {
+    e.preventDefault();
 
-        await axios.put(`http://localhost:8080/rider/${id}`, rider);
-        navigate("/");
+    if (!validateForm()) {
+      return;
     }
 
-  const loadRiders= async() => {
-    const result= await axios.get(`http://localhost:8080/rider/${id}`);
-    setRider(result.data)
+    try {
+      await axios.put(`http://localhost:8080/rider/${id}`, rider);
+      setAlertMessage("Rider updated successfully");
+      setAlertType("success");
+      setShowAlert(true);
+      navigate("/");
+    } catch (error) {
+      console.error("Error updating rider:", error);
+      setAlertMessage("Error updating rider");
+      setAlertType("danger");
+      setShowAlert(true);
+    }
+  };
+
+  const loadRider= async() => {
+   try {
+      const result = await axios.get(`http://localhost:8080/rider/${id}`);
+      setRider(result.data);
+    } catch (error) {
+      console.error("Error loading rider:", error);
+      setAlertMessage("Error loading rider");
+      setAlertType("danger");
+      setShowAlert(true);
+    }
   };
 
   return (
@@ -147,6 +224,17 @@ export default function EdidRider() {
             <Link className="btn btn-outline-danger m-3" to="/">
               Cancel
             </Link>
+            {showAlert && (
+        <div className={`alert alert-${alertType}`} role="alert">
+          {alertMessage}
+          <button
+            type="button"
+            className="btn-close"
+            aria-label="Close"
+            onClick={() => setShowAlert(false)}
+          ></button>
+        </div>
+      )}
           </form>
         </div>
       </div>
