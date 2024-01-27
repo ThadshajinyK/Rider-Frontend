@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 export default function Home() {
   const [riders, setRiders] = useState([]);
+
+  const {id}=useParams()
 
   useEffect(() => {
     loadRiders();
@@ -14,6 +16,11 @@ export default function Home() {
     console.log(results.data);
     setRiders(results.data);
   };
+
+  const deleteRider=async (id)=>{
+    await axios.delete(`http://localhost:8080/rider/${id}`)
+    loadRiders();
+  }
   return (
     <div className="container">
       <div className="py-4">
@@ -60,11 +67,12 @@ export default function Home() {
                   <Link className="btn btn-outline-secondary mx-2" to={`/editrider/${rider.id}`}>
                     Edit
                   </Link>
-                  <button className="btn btn-danger mx-2">Delete</button>
+                  <button className="btn btn-danger mx-2"
+                  onClick={()=>deleteRider(rider.id)}>Delete</button>
                 </td>
               </tr>
             ))}
-          </tbody>
+          </tbody> 
         </table>
       </div>
     </div>

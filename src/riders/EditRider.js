@@ -5,7 +5,7 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 export default function EdidRider() {
   let navigate = useNavigate();
 
-  const{id}=useParams()
+  const{id}=useParams();
 
   const [rider, setRider] = useState({
     name: "",
@@ -39,7 +39,7 @@ export default function EdidRider() {
     }
 
   const loadRiders= async() => {
-    const result= axios.get(`http://localhost:8080/rider/${id}`);
+    const result= await axios.get(`http://localhost:8080/rider/${id}`);
     setRider(result.data)
   };
 
