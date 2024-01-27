@@ -3,6 +3,8 @@ import axios from "axios";
 import { Link, useParams } from "react-router-dom";
 
 export default function Home() {
+  const [search, setSearch] = useState("");
+
   const [riders, setRiders] = useState([]);
 
   const { id } = useParams();
@@ -12,21 +14,42 @@ export default function Home() {
   }, []);
 
   const loadRiders = async () => {
+    try{
     const results = await axios.get("http://localhost:8080/riders");
     console.log(results.data);
     setRiders(results.data);
+    } catch (error){
+      console.error("Error fetching riders:", error);
+    }
   };
 
   const deleteRider = async (id) => {
-    await axios.delete(`http://localhost:8080/rider/${id}`);
-    loadRiders();
+    try{
+      await axios.delete(`http://localhost:8080/rider/${id}`);
+      console.log(search);
+      loadRiders();
+    } catch (error){
+      console.error("Error deleting rider:",error);
+    }
+    
   };
   return (
     <div className="container">
       <div className="py-4">
-        <Link className="btn btn-outline-success mb-4" to="/addrider">
-          Add Rider
-        </Link>
+        <div className="mb-2">
+          <form className="d-flex con" role="search">
+            <input
+              className="form-control m-2 "
+              type="search"
+              placeholder="Search rider"
+              aria-label="Search"
+              onChange={(e) => setSearch(e.target.value)}
+            />
+            {/* <button className="btn btn-secondary" type="submit">
+              Search
+            </button> */}
+          </form>
+        </div>
 
         <table class="table border shadow">
           <thead>
@@ -42,49 +65,54 @@ export default function Home() {
             </tr>
           </thead>
           <tbody>
-            {riders.map((rider, index) => (
-              <tr>
-                <th scope="row" key={index}>
-                  {index + 1}
-                </th>
-                <td>{rider.name}</td>
-                <td>{rider.email}</td>
-                <td>{rider.position}</td>
-                <td>{rider.nic}</td>
-                <td>
-                  {rider.status ? (
-                    <span class="badge text-bg-success">Success</span>
-                  ) : (
-                    <span class="badge text-bg-danger">Not Active</span>
-                  )}
-                </td>
-                {/* <td>
-  {rider.status ? (
-    <span className="badge badge-success">Active</span>
-  ) : (
-    <span className="badge badge-danger">Not Active</span>
-  )}
-</td> */}
-                {/* <td>
-                  <img src={rider.image} alt="rider" />
-                </td> */}
-                <td>
-                  <Link className="btn btn-primary mx-2" to={`/viewrider/${rider.id}`}>View</Link>
-                  <Link
-                    className="btn btn-outline-secondary mx-2"
-                    to={`/editrider/${rider.id}`}
-                  >
-                    Edit
-                  </Link>
-                  <button
-                    className="btn btn-danger mx-2"
-                    onClick={() => deleteRider(rider.id)}
-                  >
-                    Delete
-                  </button>
-                </td>
-              </tr>
-            ))}
+          {riders
+              .filter((rider) => {
+                const searchTermLower = search.toLowerCase();
+                return (
+                  rider.name.toLowerCase().includes(searchTermLower) ||
+                  rider.email.toLowerCase().includes(searchTermLower) ||
+                  rider.id.toString().includes(searchTermLower)
+                );
+              })
+              .map((rider) => (
+                <tr key={rider.id}>
+                  <th scope="row">
+                    {rider.id}
+                  </th>
+                  <td>{rider.name}</td>
+                  <td>{rider.email}</td>
+                  <td>{rider.position}</td>
+                  <td>{rider.nic}</td>
+                  <td>
+                    {rider.status ? (
+                      <span class="badge text-bg-success">Active</span>
+                    ) : (
+                      <span class="badge text-bg-danger">Not Active</span>
+                    )}
+                  </td>
+                 
+                  <td>
+                    <Link
+                      className="btn btn-primary mx-2"
+                      to={`/viewrider/${rider.id}`}
+                    >
+                      View
+                    </Link>
+                    <Link
+                      className="btn btn-outline-secondary mx-2"
+                      to={`/editrider/${rider.id}`}
+                    >
+                      Edit
+                    </Link>
+                    <button
+                      className="btn btn-danger mx-2"
+                      onClick={() => deleteRider(rider.id)}
+                    >
+                      Delete
+                    </button>
+                  </td>
+                </tr>
+              ))}
           </tbody>
         </table>
       </div>

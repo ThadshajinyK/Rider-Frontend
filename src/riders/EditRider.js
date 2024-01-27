@@ -142,7 +142,7 @@ export default function EdidRider() {
             </div>
 
             <button className="btn btn-outline-success m-3" type="submit">
-              Submit
+              Update
             </button>
             <Link className="btn btn-outline-danger m-3" to="/">
               Cancel

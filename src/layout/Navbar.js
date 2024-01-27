@@ -1,13 +1,17 @@
 import React from "react";
+import { Link } from "react-router-dom";
 // function component -rfc
 export default function Navbar() {
+
+  
+
   return (
     <div>
       <nav className="navbar navbar-expand-sm navbar-dark bg-dark">
         <div className="container-fluid">
-          <a className="navbar-brand" href="#">
+          <Link className="navbar-brand" to="/">
             Riders Log
-          </a>
+          </Link>
           <button
             className="navbar-toggler"
             type="button"
@@ -20,17 +24,9 @@ export default function Navbar() {
             <span className="navbar-toggler-icon"></span>
           </button>
             
-          <form className="d-flex con" role="search">
-              <input
-                className="form-control me-1"
-                type="search"
-                placeholder="Search"
-                aria-label="Search"
-              />
-              <button className="btn btn-secondary" type="submit">
-                Search
-              </button>
-              </form>
+          <Link className="btn btn-outline-primary " to="/addrider">
+          Add Rider
+        </Link>
         </div>
       </nav>
     </div>
