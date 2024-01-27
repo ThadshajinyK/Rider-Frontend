@@ -57,9 +57,9 @@ export default function Home() {
                 </td> */}
                 <td>
                   <button className="btn btn-primary mx-2">View</button>
-                  <button className="btn btn-outline-secondary mx-2">
+                  <Link className="btn btn-outline-secondary mx-2" to={`/editrider/${rider.id}`}>
                     Edit
-                  </button>
+                  </Link>
                   <button className="btn btn-danger mx-2">Delete</button>
                 </td>
               </tr>
