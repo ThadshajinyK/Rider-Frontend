@@ -10,10 +10,12 @@ export default function AddRider() {
     position: "",
     nic: "",
     status: "", // active or not active
-    image: null,
+    // image: null,
   });
 
-  const { name, email, position, nic, status, image } = rider;
+  // const { name, email, position, nic, status, image } = rider;
+  const { name, email, position, nic, status,  } = rider;
+
   const [showAlert, setShowAlert] = useState(false);
   const [alertMessage, setAlertMessage] = useState("");
   const [alertType, setAlertType] = useState("success");
@@ -46,13 +48,13 @@ export default function AddRider() {
     }
 
     // Validate NIC
-    const nicRegex = /^[0-9]{9}[vVxX]$/;
-    if (!nic.trim() || !nicRegex.test(nic)) {
-      setAlertMessage("Valid NIC number is required");
-      setAlertType("danger");
-      setShowAlert(true);
-      return false;
-    }
+    // const nicRegex = /^[0-9]{9}[vVxX]$/;
+    // if (!nic.trim() || !nicRegex.test(nic)) {
+    //   setAlertMessage("Valid NIC number is required");
+    //   setAlertType("danger");
+    //   setShowAlert(true);
+    //   return false;
+    // }
 
     // Validate status
     if (!status) {
@@ -70,7 +72,7 @@ export default function AddRider() {
     //   return false;
     // }
 
-    if (!name || !email || !position || !nic || !status) {
+    if (!name || !email || !position || !status) {
       // alert("All fields are required");
       setAlertMessage("All fields are required");
       setAlertType("danger");
@@ -84,9 +86,9 @@ export default function AddRider() {
     setRider({ ...rider, [e.target.name]: e.target.value });
   };
 
-  const onFileChange = (e) => {
-    setRider({ ...rider, image: e.target.files[0] });
-  };
+  // const onFileChange = (e) => {
+  //   setRider({ ...rider, image: e.target.files[0] });
+  // };
 
   const onStatusChange = (e) => {
     setRider({ ...rider, status: e.target.value });
@@ -194,9 +196,8 @@ export default function AddRider() {
                 <option value="false">Not Active</option>
               </select>
             </div>
-
-            {/* Upload picture */}
-            <label htmlFor="image" className="form-label text-start">
+        {/* Upload picture */}
+            {/* <label htmlFor="image" className="form-label text-start">
               Image
             </label>
             <div className="input-group mb-3">
@@ -206,7 +207,7 @@ export default function AddRider() {
                 id="image"
                 onChange={(e) => onFileChange(e)}
               />
-            </div>
+            </div> */}
 
             <button className="btn btn-outline-success m-3" type="submit">
               Submit

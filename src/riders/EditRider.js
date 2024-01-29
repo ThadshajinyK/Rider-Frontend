@@ -13,14 +13,16 @@ export default function EdidRider() {
     position: "",
     nic: "",
     status: "", // active or not active
-    image: null,
+    // image: null,
   });
 
   const [showAlert, setShowAlert] = useState(false);
   const [alertMessage, setAlertMessage] = useState("");
   const [alertType, setAlertType] = useState("success");
 
-  const { name, email, position, nic, status, image } = rider;
+  const { name, email, position, nic, status} = rider;
+  // const { name, email, position, nic, status, image } = rider;
+
   const onInputChange = (e) => {
     setRider({ ...rider, [e.target.name]: e.target.value });
   };
@@ -69,19 +71,19 @@ export default function EdidRider() {
     }
 
     // Validate image
-    if (!image) {
-      setAlertMessage("Image is required");
-      setAlertType("danger");
-      setShowAlert(true);
-      return false;
-    }
+    // if (!image) {
+    //   setAlertMessage("Image is required");
+    //   setAlertType("danger");
+    //   setShowAlert(true);
+    //   return false;
+    // }
 
     return true;
   };
 
-  const onFileChange = (e) => {
-    setRider({ ...rider, image: e.target.files[0] });
-  };
+  // const onFileChange = (e) => {
+  //   setRider({ ...rider, image: e.target.files[0] });
+  // };
 
   useEffect(() => {
     loadRider();
@@ -203,7 +205,7 @@ export default function EdidRider() {
             </div>
 
             {/* Upload picture */}
-            <label htmlFor="Name" className="form-label text-start">
+            {/* <label htmlFor="Name" className="form-label text-start">
               Image
             </label>
             <div className="input-group mb-3">
@@ -216,7 +218,7 @@ export default function EdidRider() {
               <label className="input-group-text" for="inputGroupFile02">
                 Upload
               </label>
-            </div>
+            </div> */}
 
             <button className="btn btn-outline-success m-3" type="submit">
               Update
